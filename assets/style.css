@@ -337,9 +337,9 @@ fieldset{border:0;padding:0;margin:0 0 18px}
 .kit-visual img{width:100%;border-radius:16px;object-fit:cover;aspect-ratio:4/3;background:#fff;box-shadow:0 14px 34px rgba(0,0,0,.3)}
 .kit-visual .kv-main{grid-column:span 2;aspect-ratio:1024/556}
 .story{align-items:center}
-.mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:14px}
+.mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:520px;justify-self:center}
 .mosaic img{width:100%;height:100%;object-fit:cover;border-radius:16px;aspect-ratio:4/3}
-.mosaic .m1{grid-column:span 2;aspect-ratio:16/9}
+.mosaic img:nth-child(2){transform:translateY(18px)}
 .pull{margin:26px 0 0;padding:20px 24px;background:#fff;border-radius:14px;border-inline-start:6px solid var(--worm);font-family:var(--display);font-size:1.4rem;line-height:1.4;color:var(--soil)}
 .pull cite{display:block;font-family:var(--body);font-style:normal;font-size:1rem;color:var(--muted);margin-top:6px}
 .faq-teaser{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px}
@@ -372,7 +372,7 @@ fieldset{border:0;padding:0;margin:0 0 18px}
 @media (max-width:1100px){.kit-items{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:860px){.kit-hero{grid-template-columns:1fr;gap:28px}.audiences{grid-template-columns:1fr}.kit-items{grid-template-columns:1fr 1fr}}
 @media (max-width:460px){.kit-items{grid-template-columns:1fr}}
-.chapter-grid{display:grid;grid-template-columns:minmax(0,68ch) minmax(240px,340px);gap:56px;align-items:start;justify-content:space-between}
+.chapter-grid{display:grid;grid-template-columns:minmax(0,68ch) 280px;gap:72px;align-items:start;justify-content:start}
 .side-photos{position:sticky;top:150px;display:grid;gap:18px;margin-top:64px}
 .side-photos figure{margin:0;background:#fff;border-radius:16px;padding:8px 8px 12px;box-shadow:0 10px 26px rgba(42,29,21,.10);transform:rotate(-1.2deg)}
 .side-photos figure:nth-child(even){transform:rotate(1.4deg)}
@@ -380,3 +380,7 @@ fieldset{border:0;padding:0;margin:0 0 18px}
 .side-photos figcaption{font-size:.92rem;color:var(--muted);margin:8px 4px 0;line-height:1.4}
 .band-sprout .side-photos figure{box-shadow:0 10px 26px rgba(42,29,21,.14)}
 @media (max-width:960px){.chapter-grid{grid-template-columns:1fr;gap:10px}.side-photos{position:static;margin-top:0;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}.side-photos figure{transform:none!important}}
+
+.kit-hero img{max-width:520px;justify-self:center}
+.story .mosaic img{aspect-ratio:3/4}
+@media (max-width:860px){.mosaic{max-width:100%}}
