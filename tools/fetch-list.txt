@@ -1,0 +1,5 @@
+archive/kit-page/digital-story.png https://media.base44.com/images/public/6a32b0d4403cda06605c5ad0/af720af7c_2026-06-16145210.png
+archive/kit-page/tools.png https://media.base44.com/images/public/6a32b0d4403cda06605c5ad0/33db8fac0_2026-06-16145527.png
+archive/kit-page/placemat.png https://media.base44.com/images/public/6a32b0d4403cda06605c5ad0/a4dc0c828_Screenshot_2026-06-24-10-21-41-325_comcanvaeditor.png
+archive/kit-page/box.png https://media.base44.com/images/public/6a32b0d4403cda06605c5ad0/1406f495c_2026-06-16153201.png
+archive/kit-page/worms.png https://media.base44.com/images/public/6a32b0d4403cda06605c5ad0/7f9a0d12a_generated_image.png
