@@ -1,0 +1,17 @@
+name: Archive old site images
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/archive_old_site.py
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add archive/old-site-images
+          git diff --cached --quiet || git commit -m "Archive images from the old red-worms.net site"
+          git push
