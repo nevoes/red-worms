@@ -12,6 +12,30 @@ SRC = ROOT / "src"
 WA = "https://wa.me/972529456936?text=" + "%D7%A9%D7%9C%D7%95%D7%9D%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%20%D7%94%D7%9E%D7%A8%D7%9B%D7%96%20%D7%9C%D7%AA%D7%95%D7%9C%D7%A2%D7%99%20%D7%9E%D7%99%D7%97%D7%96%D7%95%D7%A8"
 COMMUNITY = "https://chat.whatsapp.com/FJklT78znHj69qb9kPPApb"
 EMAIL = "red.worm.center@gmail.com"
+# Change to "https://www.red-worms.net/" once the domain is connected, then rebuild.
+BASE = "https://nevoes.github.io/red-worms/"
+
+LD_ORG = """<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Store","name":"המרכז לתולעי מיחזור – כל תולעת מלכה",
+"alternateName":"כל תולעת מלכה","url":"%s","logo":"%sassets/logo-mark-192.png","image":"%sassets/og-image.jpg",
+"description":"תולעים אדומות, הומוס וערכה חינוכית למיחזור ביתי. מגדלים וממחזרים מאז שנת 2000.",
+"foundingDate":"2000","telephone":"+972-52-945-6936","email":"red.worm.center@gmail.com",
+"address":{"@type":"PostalAddress","addressLocality":"קיבוץ שדה נחום","addressRegion":"עמק המעיינות","addressCountry":"IL"},
+"founder":[{"@type":"Person","name":"שרית נבו"},{"@type":"Person","name":"אשד נבו"}],
+"sameAs":[]}
+</script>"""
+
+LD_PRODUCTS = """<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ItemList","itemListElement":[
+%s
+]}
+</script>"""
+PRODUCTS = [
+  ("חבילת תולעים אדומות", "גרעין רבייה של 65 תולעים אדומות לפחות, יחד עם המצע שבו גדלו.", 65, "assets/img/worm-packages.webp"),
+  ("שני כלי עבודה", "מקלטרת וכף לטיפול בהומוס, עדינים ומותאמים לעבודה עם תולעים.", 45, "assets/img/product-tools.webp"),
+  ("פלייסמנט הסבר A3", "פלייסמנט דו-צדדי עם הסברים על האוכל, מבנה הגוף, מחזור החיים והמיחזור.", 35, "assets/img/product-placemat.webp"),
+  ("הערכה החינוכית: לומדים מיחזור עם תולעים אדומות", "65 תולעים, קופסת גידול שקופה, שני כלי עבודה, פלייסמנט וסיפור דיגיטלי.", 215, "assets/img/product-story.webp"),
+]
 
 NAV = [
     ("index.html", "בית"),
@@ -29,6 +53,15 @@ def page(fname, title, desc, body):
         f'<a href="{href}"{" aria-current=\"page\"" if href == fname else ""}>{label}</a>'
         for href, label in NAV
     )
+    canon = BASE + ("" if fname == "index.html" else fname)
+    ld = LD_ORG % (BASE, BASE, BASE) if fname == "index.html" else ""
+    if fname == "shop.html":
+        import json
+        items = ",\n".join(json.dumps({"@type": "ListItem", "position": i + 1, "item": {"@type": "Product", "name": n, "description": d,
+            "image": BASE + img, "brand": {"@type": "Brand", "name": "המרכז לתולעי מיחזור"},
+            "offers": {"@type": "Offer", "price": str(pr), "priceCurrency": "ILS", "availability": "https://schema.org/InStock", "url": BASE + "shop.html"}}},
+            ensure_ascii=False) for i, (n, d, pr, img) in enumerate(PRODUCTS))
+        ld = LD_PRODUCTS % items
     full_title = "המרכז לתולעי מיחזור – כל תולעת מלכה" if fname == "index.html" else f"{title} | המרכז לתולעי מיחזור"
     return f"""<!doctype html>
 <html lang="he" dir="rtl">
@@ -45,7 +78,11 @@ def page(fname, title, desc, body):
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="assets/logo-mark-192.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta property="og:image" content="https://nevoes.github.io/red-worms/assets/og-image.jpg">
+<meta property="og:image" content="{BASE}assets/og-image.jpg">
+<meta property="og:url" content="{canon}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="{canon}">
+{ld}
 <link rel="preload" href="assets/fonts/secular-one-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/style.css">
 </head>
@@ -117,6 +154,10 @@ def main():
         body = body.replace("{{WA}}", WA).replace("{{COMMUNITY}}", COMMUNITY).replace("{{EMAIL}}", EMAIL)
         (ROOT / src.name).write_text(page(src.name, title, desc, body), encoding="utf-8")
         print("built", src.name)
+    pages = sorted(p.name for p in SRC.glob("*.html"))
+    urls = "\n".join(f"  <url><loc>{BASE}{'' if n == 'index.html' else n}</loc></url>" for n in pages)
+    (ROOT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n', encoding="utf-8")
+    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /archive/\nDisallow: /src/\nDisallow: /tools/\n\nSitemap: {BASE}sitemap.xml\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

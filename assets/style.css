@@ -286,3 +286,19 @@ fieldset{border:0;padding:0;margin:0 0 18px}
 .hero-logo{position:absolute;z-index:2;inset-inline-end:max(20px,calc((100% - var(--wrap))/2 + 20px));top:56px;width:min(30vw,360px);height:auto;filter:drop-shadow(0 10px 30px rgba(0,0,0,.35))}
 .hero-logo{animation:sprout 1.1s .15s cubic-bezier(.2,.8,.25,1.05) both}
 @media (max-width:900px){.hero-logo{position:static;display:block;width:150px;margin:28px auto -20px}}
+
+/* photos from the farm */
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,300px));gap:16px;margin:26px 0 8px;padding:0;list-style:none}
+.photos figure{margin:0}
+.photos img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px;background:var(--sprout)}
+.photos figcaption{font-size:.92rem;color:var(--muted);margin-top:6px;line-height:1.4}
+.story-photos{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.story-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px}
+.story-photos img:first-child{grid-column:span 2;aspect-ratio:16/9}
+.product .shot{margin:-26px -26px 18px;border-radius:var(--radius) var(--radius) 0 0;overflow:hidden;background:#fff;aspect-ratio:4/3}
+.product .shot img{width:100%;height:100%;object-fit:cover}
+.product .shot.contain img{object-fit:contain;padding:10px}
+.kit-shots{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.kit-shots img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;background:#fff}
+@media (max-width:520px){.photos{grid-template-columns:1fr 1fr}.photos figcaption{font-size:.85rem}}
+.product.feature .shot{aspect-ratio:16/7}
