@@ -79,8 +79,13 @@
     notes: "entry.583848214", worms: "entry.64347666", tools: "entry.1287468503", kit: "entry.1174937475",
     status: "entry.97565866"
   };
+  var SHIP = {
+    sde: { gf: "איסוף עצמי מקיבוץ שדה נחום - ללא עלויות משלוח", label: "איסוף עצמי משדה נחום" },
+    tlv: { gf: 'איסוף עצמי מנקודת חלוקה (25 ש"ח)', point: "תל אביב", label: "איסוף מנקודת חלוקה בתל אביב" },
+    pt:  { gf: 'איסוף עצמי מנקודת חלוקה (25 ש"ח)', point: "פתח תקוה", label: "איסוף מנקודת חלוקה בפתח תקוה" },
+    home:{ gf: 'משלוח עד הבית (45 ש"ח)', label: "משלוח עד הבית" }
+  };
   var NAMES = { worms: "חבילת תולעים אדומות", tools: "שני כלי עבודה", placemat: "פלייסמנט הסבר", kit: "הערכה החינוכית" };
-  var WA_NUM = "972529456936";
 
   var steps = {}; $$("[data-step]", form).forEach(function (s) { steps[s.dataset.step] = s; });
   var backBtn = $("[data-back]", form), nextBtn = $("[data-next]", form), dots = $$(".steps li", form);
@@ -100,7 +105,7 @@
       if (q) { lines.push(NAMES[row.dataset.item] + " × " + q + " = " + q * p + " ₪"); sum += q * p; }
     });
     var s = shipInput(), cost = s ? +s.dataset.cost : 0;
-    lines.push("משלוח: " + (cost ? cost + " ₪" : "ללא עלות") + (s && s.dataset.kind === "point" ? " (" + val("point") + ")" : ""));
+    lines.push(SHIP[s.value].label + ": " + (cost ? cost + " ₪" : "ללא עלות"));
     return { lines: lines, sum: sum + cost };
   };
 
@@ -164,8 +169,8 @@
     } else {
       pages.push("6", "7", "3");
       ["worms", "tools", "kit"].forEach(function (i) { var q = Math.min(3, qty(i)); if (q) d.append(E[i], "כמות: " + q); });
-      var s = shipInput(); d.append(E.ship, s.value);
-      if (s.dataset.kind === "point") { d.append(E.point, val("point")); pages.push("4"); }
+      var s = shipInput(), sh = SHIP[s.value]; d.append(E.ship, sh.gf);
+      if (sh.point) { d.append(E.point, sh.point); pages.push("4"); }
       if (s.dataset.kind === "home") { d.append(E.city, val("city")); d.append(E.street, val("street")); d.append(E.apt, val("apt")); }
       var t = totals();
       var notes = [val("notes"), "— פירוט מהאתר —", t.lines.join(" | "), "סה\"כ לתשלום: " + t.sum + " ₪"].filter(Boolean).join("\n");
@@ -188,7 +193,7 @@
       $("[data-done-msg]", form).textContent = isOrder()
         ? (val("status").indexOf("שילמתי") === 0 ? "ההזמנה התקבלה. נבדוק את התשלום ונחזור אליכם לתאם את המסירה." : "ההזמנה התקבלה. נחזור אליכם בהקדם להשלמת התשלום ותיאום המסירה.")
         : "הפנייה התקבלה. נחזור אליכם בהקדם.";
-      $("[data-wa-summary]", form).href = "https://wa.me/" + WA_NUM + "?text=" + encodeURIComponent(summaryText());
+      $("[data-summary]", form).textContent = summaryText();
       history.push("done"); show("done");
     }).catch(function () {
       $(".err[data-err=send]", form).hidden = false;

@@ -2,7 +2,7 @@
 <header class="page-head">
   <div class="wrap">
     <h1>חנות ויצירת קשר</h1>
-    <p>כל מה שצריך כדי להתחיל לגדל תולעים אדומות. מזמינים כאן, משלמים בביט או בהעברה, ואנחנו מתאמים איתכם את המשלוח.</p>
+    <p>כל מה שצריך כדי להתחיל לגדל תולעים אדומות. מזמינים בטופס, משלמים בביט או בפייבוקס, ואנחנו מתאמים איתכם את המשלוח.</p>
   </div>
 </header>
 
@@ -82,9 +82,9 @@
       <thead><tr><th>אופן המשלוח</th><th>עלות</th></tr></thead>
       <tbody>
         <tr><td>איסוף עצמי מקיבוץ שדה נחום (עמק המעיינות)</td><td class="num">ללא עלות</td></tr>
-        <tr><td>איסוף מנקודת חלוקה: תל אביב או פתח תקוה</td><td class="num">25 ₪</td></tr>
-        <tr><td>משלוח עד הבית, בין חיפה לתל אביב</td><td class="num">45 ₪</td></tr>
-        <tr><td>משלוח ליעדים רחוקים יותר</td><td class="num">לפי היישוב</td></tr>
+        <tr><td>איסוף מנקודת חלוקה בתל אביב</td><td class="num">25 ₪</td></tr>
+        <tr><td>איסוף מנקודת חלוקה בפתח תקוה</td><td class="num">25 ₪</td></tr>
+        <tr><td>משלוח עד הבית</td><td class="num">45 ₪</td></tr>
       </tbody>
     </table>
     <p style="margin-top:16px">לדוגמה: חבילת תולעים (65 ₪) עם איסוף מנקודת חלוקה (25 ₪) – סך הכל 90 ₪. שתי חבילות עד הבית: 130 ₪ ועוד 45 ₪ – סך הכל 175 ₪. בטופס למטה הסכום מחושב בשבילכם.</p>
@@ -138,19 +138,16 @@
         <h3>איך התולעים יגיעו אליכם?</h3>
         <fieldset class="field">
           <legend class="sr-only" style="position:absolute;clip:rect(0 0 0 0)">אופן המשלוח</legend>
-          <label class="choice"><input type="radio" name="ship" value="איסוף עצמי מקיבוץ שדה נחום - ללא עלויות משלוח" data-cost="0" checked> איסוף עצמי מקיבוץ שדה נחום <span class="cost">ללא עלות</span></label>
-          <label class="choice"><input type="radio" name="ship" value='איסוף עצמי מנקודת חלוקה (25 ש"ח)' data-cost="25" data-kind="point"> איסוף מנקודת חלוקה <span class="cost">25 ₪</span></label>
-          <label class="choice"><input type="radio" name="ship" value='משלוח עד הבית (45 ש"ח)' data-cost="45" data-kind="home"> משלוח עד הבית (חיפה עד תל אביב) <span class="cost">45 ₪</span></label>
+          <label class="choice"><input type="radio" name="ship" value="sde" data-cost="0" checked> איסוף עצמי מקיבוץ שדה נחום <span class="cost">ללא עלות</span></label>
+          <label class="choice"><input type="radio" name="ship" value="tlv" data-cost="25" data-kind="point"> איסוף מנקודת חלוקה בתל אביב <span class="cost">25 ₪</span></label>
+          <label class="choice"><input type="radio" name="ship" value="pt" data-cost="25" data-kind="point"> איסוף מנקודת חלוקה בפתח תקוה <span class="cost">25 ₪</span></label>
+          <label class="choice"><input type="radio" name="ship" value="home" data-cost="45" data-kind="home"> משלוח עד הבית <span class="cost">45 ₪</span></label>
         </fieldset>
-        <div data-show="point" hidden>
-          <div class="field"><label for="f-point">נקודת האיסוף<span class="hint">הכתובת המדויקת תישלח אליכם בהודעה אחרי ההזמנה</span></label>
-            <select id="f-point" name="point"><option value="תל אביב">תל אביב</option><option value="פתח תקוה">פתח תקוה</option></select></div>
-        </div>
+        <p class="hint" data-show="point" hidden style="color:var(--muted);font-size:.95rem">הכתובת המדויקת של נקודת האיסוף תישלח אליכם בהודעה אחרי ההזמנה.</p>
         <div data-show="home" hidden>
           <div class="field"><label for="f-city">עיר</label><input type="text" id="f-city" name="city" autocomplete="address-level2"></div>
           <div class="field"><label for="f-street">רחוב ומספר בית</label><input type="text" id="f-street" name="street" autocomplete="address-line1"></div>
           <div class="field"><label for="f-apt">דירה</label><input type="text" id="f-apt" name="apt" autocomplete="address-line2"></div>
-          <p class="hint" style="color:var(--muted);font-size:.95rem">גרים רחוק יותר? הזמינו כרגיל, ונחזור אליכם עם מחיר המשלוח ליישוב שלכם.</p>
         </div>
         <div class="field"><label for="f-notes">הערות למשלוח או להזמנה<span class="hint">לא חובה</span></label><textarea id="f-notes" name="notes" style="min-height:80px"></textarea></div>
       </div>
@@ -161,8 +158,8 @@
         <div class="total-lines" data-lines></div>
         <div class="total"><span>לתשלום</span><strong data-total>0 ₪</strong></div>
         <div class="pay">
-          <p><b>ביט או פייבוקס:</b> 053-8626266</p>
-          <p><b>העברה בנקאית:</b> בנק אוצר החייל (14), סניף 363, חשבון 196041</p>
+          <p><b>תשלום בביט או בפייבוקס:</b> <span dir="ltr">053-8626266</span></p>
+          <p>העבירו את הסכום שלמעלה, וסמנו כאן שהתשלום בוצע.</p>
         </div>
         <fieldset class="field">
           <legend>איפה אנחנו עומדים?</legend>
@@ -178,12 +175,12 @@
         <div class="done-box">
           <h3>תודה, קיבלנו!</h3>
           <p data-done-msg>נחזור אליכם בהקדם.</p>
-          <p>רוצים לזרז? שלחו לנו את הפרטים גם בווטסאפ:</p>
-          <a class="btn btn-primary" data-wa-summary href="{{WA}}" target="_blank" rel="noopener">שליחת הפרטים בווטסאפ</a>
+          <p style="color:var(--muted)">שמרו את הסיכום למקרה הצורך:</p>
+          <pre data-summary style="white-space:pre-wrap;text-align:start;font:inherit;background:var(--paper);border-radius:12px;padding:14px 18px;margin:0 auto;max-width:480px"></pre>
         </div>
       </div>
 
-      <p class="err" data-err="send" hidden>משהו השתבש בשליחה. נסו שוב, או שלחו לנו את הפרטים בווטסאפ.</p>
+      <p class="err" data-err="send" hidden>משהו השתבש בשליחה. בדקו את החיבור לאינטרנט ונסו שוב.</p>
       <div class="form-nav">
         <button type="button" class="btn btn-ghost" data-back hidden>חזרה</button>
         <button type="submit" class="btn btn-primary" data-next>המשך</button>
