@@ -87,9 +87,12 @@ def page(fname, title, desc, body):
       </div>
       <div>
         <h4>יצירת קשר</h4>
-        <p>הזמנות, שאלות ובירורים – הכל דרך טופס אחד, ואנחנו חוזרים אליכם.</p>
-        <a class="btn btn-primary btn-small" href="shop.html#order">לטופס ההזמנה והפנייה</a>
-        <p style="margin-top:14px"><a href="{COMMUNITY}" target="_blank" rel="noopener">קהילת המגדלים בווטסאפ</a></p>
+        <p>הזמנות – דרך הטופס באתר. שאלות קצרות – גם בווטסאפ.</p>
+        <a class="btn btn-primary btn-small" href="shop.html#order">לטופס ההזמנה</a>
+        <ul style="margin-top:14px">
+          <li><a href="{WA}" target="_blank" rel="noopener">שאלה בווטסאפ: 052-9456936</a></li>
+          <li><a href="{COMMUNITY}" target="_blank" rel="noopener">קהילת המגדלים בווטסאפ</a></li>
+        </ul>
       </div>
     </div>
     <div class="legal">
@@ -98,6 +101,7 @@ def page(fname, title, desc, body):
     </div>
   </div>
 </footer>
+<a class="wa-float" href="{WA}" target="_blank" rel="noopener" aria-label="שאלה בווטסאפ" title="שאלה? כתבו לנו בווטסאפ">{WA_ICON}</a>
 <script src="assets/site.js" defer></script>
 </body>
 </html>
