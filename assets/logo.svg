@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="המרכז לתולעי מיחזור – כל תולעת מלכה">
-  <!-- סמל זמני: תולעת עם כתר. להחלפה בלוגו החדש – יש להחליף רק את הקובץ הזה -->
-  <circle cx="60" cy="60" r="58" fill="#3F6B3A"/>
-  <path d="M10 78 Q60 66 110 78 L110 92 Q60 118 10 92Z" fill="#2A1D15"/>
-  <path d="M24 84c8-16 20-16 26-2s16 14 22 0 18-16 26-2" fill="none" stroke="#C94B64" stroke-width="11" stroke-linecap="round"/>
-  <circle cx="96" cy="78" r="1.8" fill="#2A1D15"/>
-  <path d="M84 62l3-14 6 8 5-11 5 11 6-8 3 14z" fill="#E2B13C" stroke="#2A1D15" stroke-width="1.5" stroke-linejoin="round"/>
-  <circle cx="96" cy="44" r="2.4" fill="#C94B64"/>
-</svg>
