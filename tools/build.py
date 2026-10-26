@@ -113,35 +113,32 @@ def page(fname, title, desc, body):
 </main>
 <footer class="site-foot">
   <div class="wrap">
-    <div class="cols">
-      <div>
+    <div class="foot-top">
+      <div class="foot-brand">
         <a href="index.html" class="foot-logo"><img src="assets/logo-full-light.webp" alt="המרכז לתולעי מיחזור – כל תולעת מלכה" width="220" height="155" loading="lazy"></a>
-        <p>מגדלים תולעים אדומות, מייצרים הומוס ומלמדים מיחזור ביתי מאז שנת 2000. משק משפחתי בקיבוץ שדה נחום שבעמק המעיינות.</p>
+        <p>משק משפחתי בקיבוץ שדה נחום. מגדלים תולעים אדומות, מייצרים הומוס ומלמדים מיחזור ביתי מאז שנת 2000.</p>
       </div>
-      <div>
-        <h4>באתר</h4>
-        <ul>
-          <li><a href="worms.html">היכרות עם התולעים האדומות</a></li>
-          <li><a href="worms.html#start">איך מתחילים</a></li>
-          <li><a href="worms.html#calculator">מחשבון תולעים</a></li>
-          <li><a href="humus.html">הומוס ותה הומוס</a></li>
-          <li><a href="shop.html">חנות ומשלוחים</a></li>
-          <li><a href="shop.html#downloads">דפי מידע להורדה</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>יצירת קשר</h4>
-        <p>הזמנות – דרך הטופס באתר. שאלות קצרות – גם בווטסאפ.</p>
-        <a class="btn btn-primary btn-small" href="shop.html#order">לטופס ההזמנה</a>
-        <ul style="margin-top:14px">
-          <li><a href="{WA}" target="_blank" rel="noopener">שאלה בווטסאפ: 052-9456936</a></li>
-          <li><a href="{COMMUNITY}" target="_blank" rel="noopener">קהילת המגדלים בווטסאפ</a></li>
-        </ul>
+      <div class="foot-cta">
+        <h4>מתחילים לגדל תולעים?</h4>
+        <p>הזמנות דרך הטופס באתר, ושאלות קצרות בווטסאפ.</p>
+        <div class="foot-actions">
+          <a class="btn btn-primary" href="shop.html#order">לטופס ההזמנה</a>
+          <a class="btn btn-wa" href="{WA}" target="_blank" rel="noopener">{WA_ICON}שאלה בווטסאפ</a>
+        </div>
+        <a class="foot-community" href="{COMMUNITY}" target="_blank" rel="noopener">הצטרפו לקהילת המגדלים בווטסאפ ←</a>
       </div>
     </div>
+    <nav class="foot-links" aria-label="קישורים באתר">
+      <a href="worms.html">היכרות עם התולעים</a>
+      <a href="worms.html#start">איך מתחילים</a>
+      <a href="worms.html#calculator">מחשבון תולעים</a>
+      <a href="humus.html">הומוס ותה הומוס</a>
+      <a href="shop.html">חנות ומשלוחים</a>
+      <a href="shop.html#downloads">דפי מידע להורדה</a>
+    </nav>
     <div class="legal">
-      <span>© <span data-year>2026</span> המרכז לתולעי מיחזור – כל תולעת מלכה</span>
-      <span>שרית ואשד נבו · <a href="accessibility.html">הצהרת נגישות</a></span>
+      <span>© <span data-year>2026</span> המרכז לתולעי מיחזור · שרית ואשד נבו</span>
+      <a href="accessibility.html">הצהרת נגישות</a>
     </div>
   </div>
 </footer>
