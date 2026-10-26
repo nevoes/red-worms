@@ -15,7 +15,7 @@ EMAIL = "red.worm.center@gmail.com"
 # Change to "https://www.red-worms.net/" once the domain is connected, then rebuild.
 BASE = "https://nevoes.github.io/red-worms/"
 # GoatCounter site code (visitor stats, no cookies). Empty = no tracking script.
-GOATCOUNTER = ""
+GOATCOUNTER = "red-worms"
 
 LD_ORG = """<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Store","name":"המרכז לתולעי מיחזור – כל תולעת מלכה",
