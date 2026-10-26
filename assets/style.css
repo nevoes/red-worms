@@ -36,6 +36,7 @@ img{height:auto}
 a{color:var(--worm-deep);text-underline-offset:3px}
 a:hover{color:var(--worm)}
 :focus-visible{outline:3px solid var(--yolk);outline-offset:3px;border-radius:4px}
+iframe:focus,.frame:focus-within{outline:3px solid var(--yolk);outline-offset:3px}
 h1,h2,h3,h4{font-family:var(--display);font-weight:400;line-height:1.2;margin:0 0 .5em;color:var(--soil)}
 h1{font-size:clamp(2.6rem,7vw,5rem);letter-spacing:-.01em}
 h2{font-size:clamp(1.8rem,4vw,2.6rem)}
@@ -251,6 +252,9 @@ fieldset{border:0;padding:0;margin:0 0 18px}
 .total-lines{font-size:.98rem;color:var(--muted);margin:0 0 10px}
 .form-nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
 .err{color:var(--worm-deep);font-weight:700;font-size:.95rem;margin-top:6px}
+.order [aria-invalid="true"]{border-color:var(--worm-deep);box-shadow:0 0 0 3px rgba(184,67,90,.25)}
+.site-foot .btn-primary,.site-foot .btn-primary:hover{color:#fff}
+.site-foot .legal a{text-decoration:underline;text-underline-offset:3px}
 .pay{background:var(--sprout);border-radius:14px;padding:18px 20px;margin:14px 0 20px}
 .pay p{margin:0 0 .5em}
 .pay p:last-child{margin:0}

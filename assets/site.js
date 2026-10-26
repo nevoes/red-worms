@@ -123,6 +123,7 @@
       $("[data-total]", form).textContent = t.sum + " ₪";
     }
     $(".err[data-err=send]", form).hidden = true;
+    $(".err[data-err=fields]", form).hidden = true;
   };
 
   var validate = function (name) {
@@ -141,6 +142,7 @@
       ["city", "street"].forEach(function (n) { var el = form.elements[n]; var bad = !el.value.trim(); el.setAttribute("aria-invalid", bad ? "true" : "false"); if (bad) { ok = false; first = first || el; } });
     }
     if (name === "pay" && val("status") === "__other__" && !val("status_other")) { ok = false; first = first || form.elements.status_other; }
+    $(".err[data-err=fields]", form).hidden = !first;
     if (first) first.focus();
     return ok;
   };

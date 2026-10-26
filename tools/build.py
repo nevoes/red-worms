@@ -14,6 +14,8 @@ COMMUNITY = "https://chat.whatsapp.com/FJklT78znHj69qb9kPPApb"
 EMAIL = "red.worm.center@gmail.com"
 # Change to "https://www.red-worms.net/" once the domain is connected, then rebuild.
 BASE = "https://nevoes.github.io/red-worms/"
+# GoatCounter site code (visitor stats, no cookies). Empty = no tracking script.
+GOATCOUNTER = ""
 
 LD_ORG = """<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Store","name":"המרכז לתולעי מיחזור – כל תולעת מלכה",
@@ -66,6 +68,7 @@ def page(fname, title, desc, body):
             "offers": {"@type": "Offer", "price": str(pr), "priceCurrency": "ILS", "availability": "https://schema.org/InStock", "url": BASE + "shop.html"}}},
             ensure_ascii=False) for i, (n, d, pr, img) in enumerate(PRODUCTS))
         ld = LD_PRODUCTS % items
+    gc = (f'<script data-goatcounter="https://{GOATCOUNTER}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>\n' if GOATCOUNTER else "")
     full_title = "המרכז לתולעי מיחזור – כל תולעת מלכה" if fname == "index.html" else f"{title} | המרכז לתולעי מיחזור"
     return f"""<!doctype html>
 <html lang="he" dir="rtl">
@@ -138,13 +141,13 @@ def page(fname, title, desc, body):
     </div>
     <div class="legal">
       <span>© <span data-year>2026</span> המרכז לתולעי מיחזור – כל תולעת מלכה</span>
-      <span>שרית ואשד נבו</span>
+      <span>שרית ואשד נבו · <a href="accessibility.html">הצהרת נגישות</a></span>
     </div>
   </div>
 </footer>
 <a class="wa-float" href="{WA}" target="_blank" rel="noopener" aria-label="שאלה בווטסאפ" title="שאלה? כתבו לנו בווטסאפ">{WA_ICON}</a>
 <script src="assets/site.js?v={ASSET_V}" defer></script>
-</body>
+{gc}</body>
 </html>
 """
 

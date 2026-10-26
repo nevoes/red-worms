@@ -139,7 +139,7 @@
         <div class="qty-row" data-item="placemat" data-price="35"><div class="what"><b>פלייסמנט הסבר (A3)</b><span>35 ₪</span></div><div class="stepper"><button type="button" data-d="1" aria-label="הוספה">+</button><output>0</output><button type="button" data-d="-1" aria-label="הפחתה">−</button></div></div>
         <div class="qty-row" data-item="kit" data-price="215"><div class="what"><b>הערכה החינוכית</b><span>לומדים מיחזור עם תולעים אדומות · 215 ₪</span></div><div class="stepper"><button type="button" data-d="1" aria-label="הוספה">+</button><output>0</output><button type="button" data-d="-1" aria-label="הפחתה">−</button></div></div>
         <p class="hint" style="color:var(--muted);font-size:.95rem;margin-top:10px">עד 3 מכל פריט בטופס. לכמויות גדולות יותר כתבו לנו בהערות.</p>
-        <p class="err" data-err="products" hidden>בחרו לפחות פריט אחד.</p>
+        <p class="err" data-err="products" role="alert" hidden>בחרו לפחות פריט אחד.</p>
       </div>
 
       <!-- step: shipping -->
@@ -189,7 +189,8 @@
         </div>
       </div>
 
-      <p class="err" data-err="send" hidden>משהו השתבש בשליחה. בדקו את החיבור לאינטרנט ונסו שוב.</p>
+      <p class="err" data-err="fields" role="alert" hidden>חסרים פרטים בשדה המסומן. מלאו אותו כדי להמשיך.</p>
+      <p class="err" data-err="send" role="alert" hidden>משהו השתבש בשליחה. בדקו את החיבור לאינטרנט ונסו שוב.</p>
       <div class="form-nav">
         <button type="button" class="btn btn-ghost" data-back hidden>חזרה</button>
         <button type="submit" class="btn btn-primary" data-next>המשך</button>
