@@ -13,7 +13,7 @@ WA = "https://wa.me/972529456936?text=" + "%D7%A9%D7%9C%D7%95%D7%9D%2C%20%D7%94%
 COMMUNITY = "https://chat.whatsapp.com/FJklT78znHj69qb9kPPApb"
 EMAIL = "red.worm.center@gmail.com"
 # Change to "https://www.red-worms.net/" once the domain is connected, then rebuild.
-BASE = "https://nevoes.github.io/red-worms/"
+BASE = "https://www.red-worms.net/"
 # GoatCounter site code (visitor stats, no cookies). Empty = no tracking script.
 GOATCOUNTER = "red-worms"
 
