@@ -47,7 +47,7 @@ NAV = [
     ("shop.html", "חנות"),
 ]
 
-WA_ICON = '<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.4 6.4 0 0 0 1.3 3.4 14.7 14.7 0 0 0 5.6 5c2.1.9 2.9 1 4 .8a3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.6c-.1-.1-.3-.2-.6-.4z"/></svg>'
+WA_ICON = '<svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.4 6.4 0 0 0 1.3 3.4 14.7 14.7 0 0 0 5.6 5c2.1.9 2.9 1 4 .8a3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.6c-.1-.1-.3-.2-.6-.4z"/></svg>'
 
 
 import hashlib
@@ -112,27 +112,35 @@ def page(fname, title, desc, body):
 {body}
 </main>
 <footer class="site-foot">
+  <div class="foot-community">
+    <div class="wrap">
+      <span class="fc-icon">{WA_ICON}</span>
+      <p><b>קהילת המגדלים בווטסאפ</b><span>שאלות, טיפים ועדכונים ממגדלים אחרים – בקבוצת ווטסאפ פתוחה.</span></p>
+      <a class="btn fc-btn" href="{COMMUNITY}" target="_blank" rel="noopener">להצטרפות לקבוצה</a>
+    </div>
+  </div>
   <div class="wrap">
-    <div class="foot-grid">
+    <div class="foot-main">
       <div class="foot-brand">
         <a href="index.html" class="foot-logo"><img src="assets/logo-full-light.webp" alt="המרכז לתולעי מיחזור – כל תולעת מלכה" width="220" height="155" loading="lazy"></a>
         <p>משק משפחתי בקיבוץ שדה נחום. מגדלים תולעים אדומות, מייצרים הומוס ומלמדים מיחזור ביתי מאז שנת 2000.</p>
       </div>
-      <nav class="foot-col foot-links-col" aria-label="קישורים באתר">
-        <h4>באתר</h4>
-        <a href="worms.html">היכרות עם התולעים</a>
-        <a href="worms.html#start">איך מתחילים</a>
-        <a href="worms.html#calculator">מחשבון תולעים</a>
-        <a href="humus.html">הומוס ותה הומוס</a>
-        <a href="shop.html#downloads">דפי מידע להורדה</a>
+      <nav class="foot-nav" aria-label="קישורים באתר">
+        <div>
+          <h4>ללמוד</h4>
+          <a href="worms.html">היכרות עם התולעים</a>
+          <a href="worms.html#start">איך מתחילים</a>
+          <a href="worms.html#calculator">מחשבון תולעים</a>
+          <a href="humus.html">הומוס ותה הומוס</a>
+        </div>
+        <div>
+          <h4>להזמין</h4>
+          <a href="shop.html">חנות ומשלוחים</a>
+          <a href="shop.html#order">טופס הזמנה</a>
+          <a href="shop.html#downloads">דפי מידע להורדה</a>
+          <a href="faq.html">שאלות נפוצות</a>
+        </div>
       </nav>
-      <div class="foot-col foot-contact">
-        <h4>הזמנות ושאלות</h4>
-        <a href="shop.html#order">טופס ההזמנה</a>
-        <a href="shop.html">חנות ומשלוחים</a>
-        <a class="foot-wa" href="{WA}" target="_blank" rel="noopener">{WA_ICON}שאלה בווטסאפ</a>
-      </div>
-      <a class="foot-wa foot-community" href="{COMMUNITY}" target="_blank" rel="noopener">{WA_ICON}<span>קהילת המגדלים בווטסאפ<small>קבוצת ווטסאפ לשאלות, טיפים ועדכונים</small></span></a>
     </div>
     <div class="legal">
       <span>© <span data-year>2026</span> המרכז לתולעי מיחזור · שרית ואשד נבו</span>
