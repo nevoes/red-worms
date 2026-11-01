@@ -113,29 +113,27 @@ def page(fname, title, desc, body):
 </main>
 <footer class="site-foot">
   <div class="wrap">
-    <div class="foot-top">
+    <div class="foot-grid">
       <div class="foot-brand">
         <a href="index.html" class="foot-logo"><img src="assets/logo-full-light.webp" alt="המרכז לתולעי מיחזור – כל תולעת מלכה" width="220" height="155" loading="lazy"></a>
         <p>משק משפחתי בקיבוץ שדה נחום. מגדלים תולעים אדומות, מייצרים הומוס ומלמדים מיחזור ביתי מאז שנת 2000.</p>
       </div>
-      <div class="foot-cta">
-        <h4>מתחילים לגדל תולעים?</h4>
-        <p>הזמנות דרך הטופס באתר, ושאלות קצרות בווטסאפ.</p>
-        <div class="foot-actions">
-          <a class="btn btn-primary" href="shop.html#order">לטופס ההזמנה</a>
-          <a class="btn btn-wa" href="{WA}" target="_blank" rel="noopener">{WA_ICON}שאלה בווטסאפ</a>
-        </div>
-        <a class="foot-community" href="{COMMUNITY}" target="_blank" rel="noopener">הצטרפו לקהילת המגדלים בווטסאפ ←</a>
+      <nav class="foot-col" aria-label="קישורים באתר">
+        <h4>באתר</h4>
+        <a href="worms.html">היכרות עם התולעים</a>
+        <a href="worms.html#start">איך מתחילים</a>
+        <a href="worms.html#calculator">מחשבון תולעים</a>
+        <a href="humus.html">הומוס ותה הומוס</a>
+        <a href="shop.html#downloads">דפי מידע להורדה</a>
+      </nav>
+      <div class="foot-col">
+        <h4>הזמנות ושאלות</h4>
+        <a href="shop.html#order">טופס ההזמנה</a>
+        <a href="shop.html">חנות ומשלוחים</a>
+        <a href="{WA}" target="_blank" rel="noopener">שאלה בווטסאפ</a>
+        <a href="{COMMUNITY}" target="_blank" rel="noopener">קהילת המגדלים</a>
       </div>
     </div>
-    <nav class="foot-links" aria-label="קישורים באתר">
-      <a href="worms.html">היכרות עם התולעים</a>
-      <a href="worms.html#start">איך מתחילים</a>
-      <a href="worms.html#calculator">מחשבון תולעים</a>
-      <a href="humus.html">הומוס ותה הומוס</a>
-      <a href="shop.html">חנות ומשלוחים</a>
-      <a href="shop.html#downloads">דפי מידע להורדה</a>
-    </nav>
     <div class="legal">
       <span>© <span data-year>2026</span> המרכז לתולעי מיחזור · שרית ואשד נבו</span>
       <a href="accessibility.html">הצהרת נגישות</a>
