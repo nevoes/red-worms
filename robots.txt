@@ -4,4 +4,4 @@ Disallow: /archive/
 Disallow: /src/
 Disallow: /tools/
 
-Sitemap: https://nevoes.github.io/red-worms/sitemap.xml
+Sitemap: https://www.red-worms.net/sitemap.xml
