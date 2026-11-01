@@ -270,9 +270,17 @@ fieldset{border:0;padding:0;margin:0 0 18px}
 .site-foot h4{color:var(--paper);font-size:1.1rem;margin:0 0 14px}
 .site-foot a{color:#F0E6DC;text-decoration:none}
 .site-foot a:hover{color:var(--yolk);text-decoration:underline}
-.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;align-items:start}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-areas:"brand links contact" "brand links community";gap:16px 40px;align-items:start}
+.foot-brand{grid-area:brand}.foot-links-col{grid-area:links}.foot-contact{grid-area:contact}.foot-community{grid-area:community;justify-self:start}
 .foot-brand p{max-width:34ch;margin:0}
-.foot-col{display:flex;flex-direction:column;gap:10px}
+.foot-col{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.foot-wa{display:inline-flex;align-items:center;gap:8px}
+.foot-wa svg{width:20px;height:20px;flex:none;background:#25D366;border-radius:50%;padding:3px}
+.foot-community{background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.45);border-radius:12px;padding:10px 14px;align-items:flex-start}
+.foot-community svg{width:26px;height:26px;padding:4px;margin-top:2px}
+.foot-community span{display:flex;flex-direction:column;font-weight:700}
+.foot-community small{font-weight:400;font-size:.85rem;color:#CDBFB3}
+.site-foot a.foot-community:hover{text-decoration:none;border-color:#25D366}
 .btn-wa{background:#1E9E50}
 .btn-wa:hover{background:#178543}
 .btn-wa svg{width:20px;height:20px}
@@ -280,8 +288,9 @@ fieldset{border:0;padding:0;margin:0 0 18px}
 .legal a{color:#CDBFB3!important;text-decoration:underline!important;text-underline-offset:3px}
 @media (max-width:760px){
   .site-foot{padding:40px 0 96px}
-  .foot-grid{grid-template-columns:1fr 1fr;gap:28px 18px}
-  .foot-brand{grid-column:1/-1;text-align:center}
+  .foot-grid{grid-template-columns:1fr 1fr;grid-template-areas:"brand brand" "links contact" "community community";gap:28px 18px}
+  .foot-brand{text-align:center}
+  .foot-community{justify-self:stretch}
   .foot-brand p{margin-inline:auto;font-size:.98rem}
   .legal{flex-direction:column;align-items:center;text-align:center}
 }
