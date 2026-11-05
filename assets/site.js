@@ -72,7 +72,6 @@
 
   // Responses go straight into the existing Google Form (and its response sheet).
   var GF = "https://docs.google.com/forms/d/e/1FAIpQLScWIfrifmex9y87DLySw5ONvS__ECavyHJDNTUrZrHklt2SMg/formResponse";
-  var MAIL = "https://formsubmit.co/ajax/red.worm.center@gmail.com";
   var E = {
     name: "entry.1809162659", phone: "entry.1106255378", reason: "entry.1190596547",
     subject: "entry.2044178906", details: "entry.1191236565", ship: "entry.181668298",
@@ -182,19 +181,7 @@
       else d.append(E.status, val("status"));
     }
     d.append("fvv", "1"); d.append("pageHistory", pages.join(","));
-    var gf = fetch(GF, { method: "POST", mode: "no-cors", body: d });
-    // Also email the full details (FormSubmit), so they arrive by mail without opening the form.
-    var mail = fetch(MAIL, {
-      method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({
-        _subject: (isOrder() ? "הזמנה חדשה" : "פנייה חדשה") + " מהאתר – " + val("name"),
-        _template: "box", _captcha: "false",
-        "שם": val("name"), "טלפון": val("phone"),
-        "סוג הפנייה": isOrder() ? "הזמנה ותשלום" : (reason() === "__other__" ? val("reason_other") : reason()),
-        "פרטים": summaryText() + (isOrder() ? "\nסטטוס תשלום: " + (val("status") === "__other__" ? val("status_other") : val("status")) : "")
-      })
-    }).catch(function () {});
-    return Promise.all([gf, mail]);
+    return fetch(GF, { method: "POST", mode: "no-cors", body: d });
   };
 
   form.addEventListener("submit", function (e) {
