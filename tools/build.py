@@ -101,6 +101,7 @@ def page(fname, title, desc, body):
       <img src="assets/logo-mark-192.png" alt="" width="48" height="48">
       <span><b>המרכז לתולעי מיחזור</b><small>כל תולעת מלכה</small></span>
     </a>
+    <a class="btn btn-primary btn-small head-cta" href="shop.html#order">להזמנה</a>
     <button class="menu-btn" aria-expanded="false" aria-controls="nav">תפריט</button>
     <nav class="nav" id="nav" aria-label="ראשי">
 {nav}
