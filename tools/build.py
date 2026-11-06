@@ -156,6 +156,15 @@ def page(fname, title, desc, body):
 """
 
 
+def bust(html):
+    """Add ?v=<hash> to logo/icon URLs so browsers never show a cached old logo."""
+    def rep(m):
+        f = ROOT / m.group(2)
+        if not f.exists(): return m.group(0)
+        return m.group(1) + m.group(2) + "?v=" + hashlib.md5(f.read_bytes()).hexdigest()[:8]
+    return re.sub(r'((?:src|href)=")((?:assets/(?:logo-[\w-]+|apple-touch-icon)\.(?:png|webp))|favicon\.ico)(?=")', rep, html)
+
+
 def main():
     for src in sorted(SRC.glob("*.html")):
         text = src.read_text(encoding="utf-8")
@@ -163,7 +172,7 @@ def main():
         title, desc = (m.group(1).strip(), m.group(2).strip()) if m else (src.stem, "")
         body = text[m.end():] if m else text
         body = body.replace("{{WA}}", WA).replace("{{COMMUNITY}}", COMMUNITY).replace("{{EMAIL}}", EMAIL)
-        (ROOT / src.name).write_text(page(src.name, title, desc, body), encoding="utf-8")
+        (ROOT / src.name).write_text(bust(page(src.name, title, desc, body)), encoding="utf-8")
         print("built", src.name)
     pages = sorted(p.name for p in SRC.glob("*.html"))
     urls = "\n".join(f"  <url><loc>{BASE}{'' if n == 'index.html' else n}</loc></url>" for n in pages)
