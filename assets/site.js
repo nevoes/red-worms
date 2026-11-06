@@ -114,6 +114,7 @@
     var order = isOrder();
     $$("[data-when]", form).forEach(function (b) { b.hidden = (b.dataset.when === "order") !== order; });
     form.elements.reason_other.hidden = reason() !== "__other__";
+    form.elements.subject.closest(".field").hidden = reason() === "__other__";
     form.elements.status_other.hidden = val("status") !== "__other__";
     var k = shipInput().dataset.kind || "";
     $$("[data-show]", form).forEach(function (b) { b.hidden = b.dataset.show !== k; });
@@ -252,6 +253,7 @@
     e.preventDefault();
     if (!validate(cur) || sending) return;
     if (cur === "what") { show("details", true); save(); return; }
+    if (reason() === "__other__") form.elements.subject.value = val("reason_other");
     sending = true; nextBtn.disabled = true; nextBtn.textContent = "שולחים…";
     send().then(function () {
       $("[data-done-msg]", form).textContent = isOrder()
