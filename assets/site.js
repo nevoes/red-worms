@@ -88,13 +88,13 @@
   var NAMES = { worms: "חבילת תולעים אדומות", tools: "שני כלי עבודה", placemat: "פלייסמנט הסבר", kit: "הערכה החינוכית" };
 
   var steps = {}; $$("[data-step]", form).forEach(function (s) { steps[s.dataset.step] = s; });
-  var backBtn = $("[data-back]", form), nextBtn = $("[data-next]", form), dots = $$(".steps li", form);
-  var history = ["contact"], sending = false;
+  var backBtn = $("[data-back]", form), nextBtn = $("[data-next]", form), dots = $$(".steps li", form),
+      countEl = $("[data-step-count]", form);
+  var cur = "what", sending = false, KEY = "rw-order-v1";
 
   var val = function (n) { var el = form.elements[n]; if (!el) return ""; if (el.length && !el.tagName) { var c = $$("input[name='" + n + "']:checked", form)[0]; return c ? c.value : ""; } return (el.value || "").trim(); };
   var reason = function () { return val("reason"); };
   var isOrder = function () { return reason() === "הזמנה ותשלום"; };
-  var path = function () { return isOrder() ? ["contact", "products", "shipping", "pay"] : ["contact", "general"]; };
   var qty = function (item) { var r = $(".qty-row[data-item='" + item + "'] output", form); return r ? +r.textContent : 0; };
   var shipInput = function () { return $("input[name=ship]:checked", form); };
 
@@ -106,46 +106,110 @@
     });
     var s = shipInput(), cost = s ? +s.dataset.cost : 0;
     lines.push(SHIP[s.value].label + ": " + (cost ? cost + " ₪" : "ללא עלות"));
-    return { lines: lines, sum: sum + cost };
+    return { lines: lines, sum: sum + cost, items: sum };
   };
 
-  var show = function (name) {
+  /* show/hide the parts that depend on the choices */
+  var sync = function () {
+    var order = isOrder();
+    $$("[data-when]", form).forEach(function (b) { b.hidden = (b.dataset.when === "order") !== order; });
+    form.elements.reason_other.hidden = reason() !== "__other__";
+    form.elements.status_other.hidden = val("status") !== "__other__";
+    var k = shipInput().dataset.kind || "";
+    $$("[data-show]", form).forEach(function (b) { b.hidden = b.dataset.show !== k; });
+    var t = totals();
+    $("[data-mini-total]", form).textContent = (t.items ? t.sum : 0) + " ₪";
+  };
+
+  var show = function (name, focus) {
+    cur = name;
     Object.keys(steps).forEach(function (k) { steps[k].hidden = k !== name; });
-    var p = path(), idx = p.indexOf(name);
-    dots.forEach(function (d, i) { d.hidden = i >= p.length; d.className = i < idx ? "done" : i === idx ? "now" : ""; if (name === "done") d.className = "done"; });
-    backBtn.hidden = history.length < 2 || name === "done";
+    var idx = name === "what" ? 0 : 1;
+    dots.forEach(function (d, i) { d.className = name === "done" || i < idx ? "done" : i === idx ? "now" : ""; });
+    countEl.hidden = name === "done";
+    countEl.textContent = "שלב " + (idx + 1) + " מתוך 2";
+    backBtn.hidden = name !== "details";
     nextBtn.hidden = name === "done";
-    var last = p.indexOf(name) === p.length - 1;
-    nextBtn.textContent = last ? (isOrder() ? "שליחת ההזמנה" : "שליחת הפנייה") : "המשך";
-    if (name === "pay") {
+    nextBtn.textContent = name === "details" ? (isOrder() ? "שליחת ההזמנה" : "שליחת הפנייה") : "המשך";
+    if (name === "details" && isOrder()) {
       var t = totals();
       $("[data-lines]", form).innerHTML = t.lines.map(function (l) { return "<div>" + l + "</div>"; }).join("");
       $("[data-total]", form).textContent = t.sum + " ₪";
     }
     $(".err[data-err=send]", form).hidden = true;
     $(".err[data-err=fields]", form).hidden = true;
+    sync();
+    if (focus) {
+      var h = $("h3", steps[name]);
+      form.scrollIntoView({ block: "start" });
+      if (h) h.focus({ preventScroll: true });
+    }
   };
 
+  var mark = function (el, bad) {
+    el.setAttribute("aria-invalid", bad ? "true" : "false");
+    if (bad) el.setAttribute("aria-describedby", "f-err"); else el.removeAttribute("aria-describedby");
+    return bad;
+  };
   var validate = function (name) {
-    var ok = true, first = null;
-    $$("[required]", steps[name]).forEach(function (el) {
-      var bad = !el.value.trim() || (el.type === "tel" && el.value.replace(/\D/g, "").length < 9);
-      el.setAttribute("aria-invalid", bad ? "true" : "false");
-      if (bad) { ok = false; first = first || el; }
-    });
-    if (name === "contact" && reason() === "__other__" && !val("reason_other")) { ok = false; first = first || form.elements.reason_other; }
-    if (name === "products") {
-      var any = ["worms", "tools", "placemat", "kit"].some(function (i) { return qty(i) > 0; });
-      $(".err[data-err=products]", form).hidden = any; if (!any) ok = false;
+    var first = null, ok = true;
+    var need = function (n, extra) { var el = form.elements[n]; var bad = mark(el, !el.value.trim() || (extra && extra(el))); if (bad) { ok = false; first = first || el; } };
+    if (name === "what") {
+      if (reason() === "__other__") need("reason_other");
+      if (isOrder()) {
+        var any = ["worms", "tools", "placemat", "kit"].some(function (i) { return qty(i) > 0; });
+        $(".err[data-err=products]", form).hidden = any;
+        if (!any) { ok = false; first = first || $(".qty-row button", form); }
+        if (shipInput().dataset.kind === "home") { need("city"); need("street"); }
+      } else {
+        if (reason() !== "__other__") need("subject");
+        need("details");
+      }
     }
-    if (name === "shipping" && shipInput().dataset.kind === "home") {
-      ["city", "street"].forEach(function (n) { var el = form.elements[n]; var bad = !el.value.trim(); el.setAttribute("aria-invalid", bad ? "true" : "false"); if (bad) { ok = false; first = first || el; } });
+    if (name === "details") {
+      need("name");
+      need("phone", function (el) { return el.value.replace(/\D/g, "").length < 9; });
+      if (isOrder()) {
+        var st = $$("input[name=status]", form);
+        if (!val("status")) { ok = false; first = first || st[0]; $("fieldset", st[0].closest("[data-when]")).classList.add("invalid"); }
+        else $$("fieldset.invalid", form).forEach(function (f) { f.classList.remove("invalid"); });
+        if (val("status") === "__other__") need("status_other");
+      }
     }
-    if (name === "pay" && val("status") === "__other__" && !val("status_other")) { ok = false; first = first || form.elements.status_other; }
-    $(".err[data-err=fields]", form).hidden = !first;
+    var err = $(".err[data-err=fields]", form);
+    err.textContent = name === "details" && isOrder() && !val("status") && first && first.name === "status"
+      ? "סמנו מה מצב התשלום כדי לשלוח." : "חסר פרט בשדה המסומן. מלאו אותו כדי להמשיך.";
+    err.hidden = !first || (first && first.closest(".qty-row"));
     if (first) first.focus();
     return ok;
   };
+  $(".err[data-err=fields]", form).id = "f-err";
+
+  /* remember what was filled in (e.g. while switching to Bit and back) */
+  var save = function () {
+    try {
+      var d = { q: {}, f: {} };
+      $$(".qty-row", form).forEach(function (r) { d.q[r.dataset.item] = +$("output", r).textContent; });
+      $$("input, textarea", form).forEach(function (el) {
+        if (el.type === "radio") { if (el.checked) d.f[el.name] = el.value; }
+        else if (el.name) d.f[el.name] = el.value;
+      });
+      d.step = cur === "done" ? "what" : cur;
+      sessionStorage.setItem(KEY, JSON.stringify(d));
+    } catch (e) {}
+  };
+  var restore = function () {
+    try {
+      var d = JSON.parse(sessionStorage.getItem(KEY) || "null"); if (!d) return false;
+      Object.keys(d.q).forEach(function (k) { var o = $(".qty-row[data-item='" + k + "'] output", form); if (o) o.textContent = d.q[k]; });
+      $$("input, textarea", form).forEach(function (el) {
+        if (!(el.name in d.f)) return;
+        if (el.type === "radio") el.checked = el.value === d.f[el.name]; else el.value = d.f[el.name];
+      });
+      return d.step || "what";
+    } catch (e) { return false; }
+  };
+  var clearSaved = function () { try { sessionStorage.removeItem(KEY); } catch (e) {} };
 
   var summaryText = function () {
     var s = ["שם: " + val("name"), "טלפון: " + val("phone")];
@@ -186,59 +250,59 @@
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var cur = history[history.length - 1];
     if (!validate(cur) || sending) return;
-    var p = path(), i = p.indexOf(cur);
-    if (i < p.length - 1) { history.push(p[i + 1]); show(p[i + 1]); steps[p[i + 1]].scrollIntoView({ block: "nearest" }); return; }
+    if (cur === "what") { show("details", true); save(); return; }
     sending = true; nextBtn.disabled = true; nextBtn.textContent = "שולחים…";
     send().then(function () {
       $("[data-done-msg]", form).textContent = isOrder()
         ? (val("status").indexOf("שילמתי") === 0 ? "ההזמנה התקבלה. נבדוק את התשלום ונחזור אליכם לתאם את המסירה." : "ההזמנה התקבלה. נחזור אליכם בהקדם להשלמת התשלום ותיאום המסירה.")
         : "הפנייה התקבלה. נחזור אליכם בהקדם.";
       $("[data-summary]", form).textContent = summaryText();
-      history.push("done"); show("done");
+      clearSaved();
+      show("done", true);
     }).catch(function () {
       $(".err[data-err=send]", form).hidden = false;
-    }).then(function () { sending = false; nextBtn.disabled = false; if (history[history.length - 1] !== "done") show(cur); });
+    }).then(function () { sending = false; nextBtn.disabled = false; if (cur !== "done") nextBtn.textContent = isOrder() ? "שליחת ההזמנה" : "שליחת הפנייה"; });
   });
 
-  backBtn.addEventListener("click", function () { if (history.length > 1) { history.pop(); show(history[history.length - 1]); } });
+  backBtn.addEventListener("click", function () { show("what", true); save(); });
 
-  // "other" text fields
-  $$("input[name=reason], input[name=status]").forEach(function (r) {
-    r.addEventListener("change", function () {
-      form.elements.reason_other.hidden = val("reason") !== "__other__";
-      form.elements.status_other.hidden = val("status") !== "__other__";
-      if (history[history.length - 1] === "contact") show("contact");
-    });
-  });
-  // shipping conditional blocks
-  $$("input[name=ship]").forEach(function (r) {
-    r.addEventListener("change", function () {
-      var k = shipInput().dataset.kind || "";
-      $$("[data-show]", form).forEach(function (b) { b.hidden = b.dataset.show !== k; });
-    });
-  });
+  form.addEventListener("change", function () { sync(); save(); });
+  form.addEventListener("input", function (e) { if (e.target.getAttribute("aria-invalid") === "true" && e.target.value.trim()) mark(e.target, false); save(); });
+
   // steppers
   $$(".qty-row").forEach(function (row) {
     $$("button", row).forEach(function (b) {
       b.addEventListener("click", function () {
         var o = $("output", row); o.textContent = Math.max(0, Math.min(3, +o.textContent + +b.dataset.d));
         $(".err[data-err=products]", form).hidden = true;
+        sync(); save();
       });
     });
   });
-  // "להזמנה" buttons on product cards
-  $$("[data-add]").forEach(function (a) {
-    a.addEventListener("click", function () {
-      var row = $(".qty-row[data-item='" + a.dataset.add + "'] output", form);
-      if (row && +row.textContent === 0) row.textContent = "1";
-      $("input[name=reason][value='הזמנה ותשלום']", form).checked = true;
-      form.elements.reason_other.hidden = true;
-      if (history[history.length - 1] === "general") { history = ["contact"]; }
-      show(history[history.length - 1]);
+
+  // copy the Bit/PayBox number
+  $$("[data-copy]", form).forEach(function (b) {
+    b.addEventListener("click", function () {
+      var done = function () { b.textContent = "הועתק ✓"; setTimeout(function () { b.textContent = "העתקת המספר"; }, 2000); };
+      if (navigator.clipboard) navigator.clipboard.writeText(b.dataset.copy).then(done, function () {}); 
     });
   });
 
-  show("contact");
+  // "להזמנה" buttons: pick the item and jump to the form
+  var addItem = function (item) {
+    var o = $(".qty-row[data-item='" + item + "'] output", form);
+    if (o && +o.textContent === 0) o.textContent = "1";
+    $("input[name=reason][value='הזמנה ותשלום']", form).checked = true;
+    show("what"); save();
+  };
+  $$("[data-add]").forEach(function (a) { a.addEventListener("click", function () { addItem(a.dataset.add); }); });
+
+  var start = restore();
+  show(start === "details" ? "details" : "what");
+  var m = /[?&]add=(\w+)/.exec(location.search);
+  if (m && NAMES[m[1]]) {
+    addItem(m[1]);
+    if (history.replaceState) history.replaceState(null, "", location.pathname + location.hash);
+  }
 })();
