@@ -39,6 +39,19 @@ PRODUCTS = [
   ("הערכה החינוכית: לומדים מיחזור עם תולעים אדומות", "65 תולעים, קופסת גידול שקופה, שני כלי עבודה, פלייסמנט וסיפור דיגיטלי.", 215, "assets/img/product-story.webp"),
 ]
 
+def _ship(name, cost):
+    return {"@type": "OfferShippingDetails", "name": name,
+            "shippingRate": {"@type": "MonetaryAmount", "value": cost, "currency": "ILS"},
+            "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "IL"}}
+SHIPPING = [_ship("משלוח עד הבית", 45), _ship("איסוף מנקודת חלוקה", 25), _ship("איסוף עצמי משדה נחום", 0)]
+# Worms (live animals) – no returns. Other items – 14 days (by law), refund minus shipping and a 10% handling fee.
+RETURN_NONE = {"@type": "MerchantReturnPolicy", "applicableCountry": "IL",
+               "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"}
+RETURN_14 = {"@type": "MerchantReturnPolicy", "applicableCountry": "IL",
+             "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow", "merchantReturnDays": 14,
+             "returnMethod": "https://schema.org/ReturnInStore", "returnFees": "https://schema.org/RestockingFees", "restockingFee": 10,
+             "merchantReturnLink": BASE + "shop.html#returns"}
+
 NAV = [
     ("index.html", "בית"),
     ("worms.html", "היכרות עם התולעים"),
@@ -65,7 +78,8 @@ def page(fname, title, desc, body):
         import json
         items = ",\n".join(json.dumps({"@type": "ListItem", "position": i + 1, "item": {"@type": "Product", "name": n, "description": d,
             "image": BASE + img, "brand": {"@type": "Brand", "name": "המרכז לתולעי מיחזור"},
-            "offers": {"@type": "Offer", "price": str(pr), "priceCurrency": "ILS", "availability": "https://schema.org/InStock", "url": BASE + "shop.html"}}},
+            "offers": {"@type": "Offer", "price": str(pr), "priceCurrency": "ILS", "availability": "https://schema.org/InStock", "url": BASE + "shop.html",
+                       "shippingDetails": SHIPPING, "hasMerchantReturnPolicy": RETURN_NONE if i == 0 else RETURN_14}}},
             ensure_ascii=False) for i, (n, d, pr, img) in enumerate(PRODUCTS))
         ld = LD_PRODUCTS % items
     gc = (f'<script data-goatcounter="https://{GOATCOUNTER}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>\n' if GOATCOUNTER else "")
