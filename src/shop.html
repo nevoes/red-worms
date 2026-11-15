@@ -97,6 +97,7 @@
       </tbody>
     </table>
     <p style="margin-top:16px">לדוגמה: חבילת תולעים (65 ₪) עם איסוף מנקודת חלוקה (25 ₪) – סך הכל 90 ₪. שתי חבילות עד הבית: 130 ₪ ועוד 45 ₪ – סך הכל 175 ₪. בטופס למטה הסכום מחושב בשבילכם.</p>
+    <p><button type="button" class="policy-link" data-open-returns>מדיניות החזרות ›</button></p>
   </div>
 </section>
 
@@ -165,6 +166,7 @@
           <h4 class="order-sub">סיכום ההזמנה</h4>
           <div class="total-lines" data-lines></div>
           <div class="total"><span>לתשלום</span><strong data-total>0 ₪</strong></div>
+          <p style="margin:6px 0 0;text-align:start"><button type="button" class="policy-link" data-open-returns>מדיניות החזרות ›</button></p>
           <div class="pay">
             <p><b>תשלום בביט או בפייבוקס</b> למספר <span dir="ltr" class="pay-num">053-8626266</span> <button type="button" class="copy-btn" data-copy="0538626266">העתקת המספר</button></p>
             <p class="form-hint" style="margin:0">אפשר לשלם עכשיו ולחזור לכאן – הטופס זוכר את מה שמילאתם.</p>
@@ -217,3 +219,27 @@
     </div>
   </div>
 </section>
+
+<dialog id="returns" class="policy-dialog" aria-labelledby="returns-title">
+  <h2 id="returns-title">מדיניות החזרות</h2>
+  <ul>
+    <li><b>תולעים:</b> תולעים הן בעלי חיים, ולכן לא ניתן להחזיר אותן ולא ניתן לקבל עליהן החזר כספי.</li>
+    <li><b>כלי עבודה ופלייסמנט:</b> אפשר להחזיר אותם אלינו לקיבוץ שדה נחום תוך 14 יום מקבלת המוצר ולקבל החזר כספי, בניכוי דמי המשלוח ו-10% דמי טיפול.</li>
+    <li><b>הערכה החינוכית:</b> אפשר להחזיר את רכיבי הערכה (ללא התולעים) תוך 14 יום מקבלת המוצר. מההחזר ינוכו דמי המשלוח, שווי התולעים (65 ₪) ו-10% דמי טיפול.</li>
+  </ul>
+  <form method="dialog"><button class="btn btn-primary">סגירה</button></form>
+</dialog>
+<style>
+.policy-link{background:none;border:0;padding:0;font:inherit;color:var(--worm-deep);text-decoration:underline;cursor:pointer}
+.policy-dialog{max-width:520px;width:calc(100% - 32px);border:0;border-radius:var(--radius);padding:24px 26px;color:var(--ink);background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.policy-dialog::backdrop{background:rgba(42,29,21,.55)}
+.policy-dialog h2{margin-top:0}
+.policy-dialog ul{padding-inline-start:20px;line-height:1.6}
+.policy-dialog form{text-align:center;margin-top:16px}
+</style>
+<script>
+(function(){var d=document.getElementById("returns");if(!d)return;
+document.querySelectorAll("[data-open-returns]").forEach(function(b){b.addEventListener("click",function(){if(d.showModal)d.showModal();else d.setAttribute("open","");});});
+d.addEventListener("click",function(e){if(e.target===d)d.close();});
+if(location.hash==="#returns"&&d.showModal)d.showModal();})();
+</script>
