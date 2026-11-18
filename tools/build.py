@@ -43,7 +43,7 @@ def _ship(name, cost):
     return {"@type": "OfferShippingDetails", "name": name,
             "shippingRate": {"@type": "MonetaryAmount", "value": cost, "currency": "ILS"},
             "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "IL"}}
-SHIPPING = [_ship("משלוח עד הבית", 45), _ship("איסוף מנקודת חלוקה", 25), _ship("איסוף עצמי משדה נחום", 0)]
+SHIPPING = [_ship("משלוח עד הבית", 65), _ship("איסוף מנקודת חלוקה", 20), _ship("איסוף עצמי משדה נחום", 0)]
 # Worms (live animals) – no returns. Other items – 14 days (by law), refund minus shipping and a 10% handling fee.
 RETURN_NONE = {"@type": "MerchantReturnPolicy", "applicableCountry": "IL",
                "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"}
