@@ -104,9 +104,11 @@ def page(fname, title, desc, body):
 <meta property="og:locale" content="he_IL">
 <meta name="theme-color" content="#2A1D15">
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" href="assets/logo-mark-192.png" type="image/png">
+<link rel="icon" href="assets/logo-favicon-192.png" type="image/png" sizes="192x192">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta property="og:image" content="{BASE}assets/og-image.jpg">
+<meta property="og:image:alt" content="הלוגו של המרכז לתולעי מיחזור – כל תולעת מלכה">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="{canon}">
@@ -198,7 +200,9 @@ def bust(html):
         f = ROOT / m.group(2)
         if not f.exists(): return m.group(0)
         return m.group(1) + m.group(2) + "?v=" + hashlib.md5(f.read_bytes()).hexdigest()[:8]
-    return re.sub(r'((?:src|href)=")((?:assets/(?:logo-[\w-]+|apple-touch-icon)\.(?:png|webp))|favicon\.ico)(?=")', rep, html)
+    html = re.sub(r'((?:src|href)=")((?:assets/(?:logo-[\w-]+|apple-touch-icon)\.(?:png|webp))|favicon\.ico)(?=")', rep, html)
+    # og:image too, so WhatsApp/Facebook fetch the new picture instead of a cached one
+    return re.sub(r'(content="' + re.escape(BASE) + r')(assets/og-image\.jpg)(?=")', rep, html)
 
 
 def main():
