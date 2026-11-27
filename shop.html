@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>חנות, משלוחים ויצירת קשר | המרכז לתולעי מיחזור</title>
-<meta name="description" content="חבילת תולעים אדומות, כלי עבודה, פלייסמנט והערכה החינוכית &quot;לומדים מיחזור עם תולעים אדומות&quot;. מחירון משלוחים, טופס הזמנה ופנייה ודפי מידע להורדה.">
+<meta name="description" content="חבילת תולעים אדומות, כלי עבודה, פלייסמנט והערכה החינוכית &quot;לומדים מיחזור עם תולעים אדומות&quot;. טופס הזמנה ופנייה, איסוף עצמי, נקודות חלוקה או משלוח עד הבית.">
 <meta property="og:title" content="חנות, משלוחים ויצירת קשר | המרכז לתולעי מיחזור">
-<meta property="og:description" content="חבילת תולעים אדומות, כלי עבודה, פלייסמנט והערכה החינוכית &quot;לומדים מיחזור עם תולעים אדומות&quot;. מחירון משלוחים, טופס הזמנה ופנייה ודפי מידע להורדה.">
+<meta property="og:description" content="חבילת תולעים אדומות, כלי עבודה, פלייסמנט והערכה החינוכית &quot;לומדים מיחזור עם תולעים אדומות&quot;. טופס הזמנה ופנייה, איסוף עצמי, נקודות חלוקה או משלוח עד הבית.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="המרכז לתולעי מיחזור">
 <meta property="og:locale" content="he_IL">
@@ -65,7 +65,6 @@
   <div class="wrap">
     <a href="#products">מוצרים</a>
     <a href="#kit">הערכה החינוכית</a>
-    <a href="#delivery">משלוחים</a>
     <a href="#order">הזמנה ופנייה</a>
   </div>
 </nav>
@@ -137,24 +136,6 @@
   </div>
 </section>
 
-<section class="section chapter" id="delivery">
-  <div class="wrap prose">
-    <h2>משלוחים</h2>
-    <p>אחרי ההזמנה אנחנו מתאמים איתכם ישירות את המסירה, כדי שהתולעים יגיעו כמה שיותר מהר ובמצב מצוין. התולעים מגיעות בדרך כלל תוך כשבועיים.</p>
-    <table class="table">
-      <thead><tr><th>אופן המשלוח</th><th>עלות</th></tr></thead>
-      <tbody>
-        <tr><td>איסוף עצמי מקיבוץ שדה נחום (עמק המעיינות)</td><td class="num">ללא עלות</td></tr>
-        <tr><td>איסוף מנקודת חלוקה בתל אביב</td><td class="num">20 ₪</td></tr>
-        <tr><td>איסוף מנקודת חלוקה בפתח תקוה</td><td class="num">20 ₪</td></tr>
-        <tr><td>משלוח עד הבית</td><td class="num">65 ₪</td></tr>
-      </tbody>
-    </table>
-    <p style="margin-top:16px">לדוגמה: חבילת תולעים (65 ₪) עם איסוף מנקודת חלוקה (20 ₪) – סך הכל 85 ₪. שתי חבילות עד הבית: 130 ₪ ועוד 65 ₪ – סך הכל 195 ₪. בטופס למטה הסכום מחושב בשבילכם.</p>
-    <p><button type="button" class="policy-link" data-open-returns>מדיניות החזרות ›</button></p>
-  </div>
-</section>
-
 <section class="section chapter band-sprout" id="order">
   <div class="wrap">
     <div class="prose">
@@ -187,13 +168,14 @@
           <p class="form-hint">עד 3 מכל פריט. לכמויות גדולות יותר כתבו לנו בהערות.</p>
           <p class="err" data-err="products" role="alert" hidden>בחרו לפחות פריט אחד.</p>
 
-          <fieldset class="field" style="margin-top:22px">
+          <fieldset class="field" id="delivery" style="margin-top:22px;scroll-margin-top:150px">
             <legend>איך ההזמנה תגיע אליכם?</legend>
             <label class="choice"><input type="radio" name="ship" value="sde" data-cost="0" checked> איסוף עצמי מקיבוץ שדה נחום <span class="cost">ללא עלות</span></label>
             <label class="choice"><input type="radio" name="ship" value="tlv" data-cost="20" data-kind="point"> איסוף מנקודת חלוקה בתל אביב <span class="cost">20 ₪</span></label>
             <label class="choice"><input type="radio" name="ship" value="pt" data-cost="20" data-kind="point"> איסוף מנקודת חלוקה בפתח תקוה <span class="cost">20 ₪</span></label>
             <label class="choice"><input type="radio" name="ship" value="home" data-cost="65" data-kind="home"> משלוח עד הבית <span class="cost">65 ₪</span></label>
           </fieldset>
+          <p class="form-hint">אחרי ההזמנה נתאם איתכם את המסירה. התולעים מגיעות בדרך כלל תוך כשבועיים.</p>
           <p class="form-hint" data-show="point" hidden>הכתובת המדויקת של נקודת האיסוף תישלח אליכם בהודעה אחרי ההזמנה.</p>
           <div data-show="home" hidden>
             <div class="field"><label for="f-city">עיר</label><input type="text" id="f-city" name="city" autocomplete="address-level2"></div>
