@@ -59,7 +59,7 @@ NAV = [
     ("index.html", "בית"),
     ("worms.html", "היכרות עם התולעים"),
     ("humus.html", "הומוס"),
-    ("faq.html", "שאלות ומילון"),
+    ("faq.html", "דפי מידע ושאלות"),
     ("shop.html", "חנות"),
 ]
 
@@ -156,12 +156,12 @@ def page(fname, title, desc, body):
           <a href="worms.html#start">איך מתחילים</a>
           <a href="worms.html#calculator">מחשבון תולעים</a>
           <a href="humus.html">הומוס ותה הומוס</a>
+          <a href="faq.html#downloads">דפי מידע להורדה</a>
         </div>
         <div>
           <h2 class="foot-h">להזמין</h2>
           <a href="shop.html">חנות ומשלוחים</a>
           <a href="shop.html#order">טופס הזמנה</a>
-          <a href="shop.html#downloads">דפי מידע להורדה</a>
           <a href="faq.html">שאלות נפוצות</a>
         </div>
       </nav>
