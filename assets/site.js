@@ -317,3 +317,42 @@
     if (history.replaceState) history.replaceState(null, "", location.pathname + location.hash);
   }
 })();
+
+/* clean jump: links to a spot on the same page jump straight there with a short fade (no long scroll);
+   folded chapters open on arrival */
+(function () {
+  var main = document.getElementById("main");
+  if (!main || !document.addEventListener) return;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function byHash(h) { try { return h && h.length > 1 ? document.getElementById(decodeURIComponent(h.slice(1))) : null; } catch (e) { return null; } }
+  function openFold(el) {
+    var d = el.querySelector && el.querySelector("details.fold");
+    if (!d && el.closest) d = el.closest("details");
+    if (d && !d.open) d.open = true;
+  }
+  function jump(el) {
+    openFold(el);
+    var root = document.documentElement, prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    el.scrollIntoView({ block: "start" });
+    root.style.scrollBehavior = prev;
+  }
+  document.addEventListener("click", function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest("a[href*='#']");
+    if (!a || a.target === "_blank") return;
+    var url;
+    try { url = new URL(a.getAttribute("href"), location.href); } catch (x) { return; }
+    if (url.pathname !== location.pathname || (url.search && url.search !== location.search)) return;
+    var el = byHash(url.hash);
+    if (!el) return;
+    e.preventDefault();
+    if (history.pushState) history.pushState(null, "", url.hash);
+    if (reduce) { jump(el); return; }
+    main.classList.add("jump-out");
+    setTimeout(function () { jump(el); main.classList.remove("jump-out"); }, 150);
+  });
+  window.addEventListener("popstate", function () { var el = byHash(location.hash); if (el) jump(el); });
+  var start = byHash(location.hash);
+  if (start) { openFold(start); setTimeout(function () { jump(start); }, 60); }
+})();
