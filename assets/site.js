@@ -7,6 +7,15 @@
   /* year */
   $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
+  /* Canva viewers: swap the preview picture for the real player on click */
+  $$(".embed-play").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var f = document.createElement("iframe");
+      f.src = b.dataset.embed; f.title = b.dataset.title; f.allowFullscreen = true;
+      b.parentNode.replaceChild(f, b); f.focus();
+    });
+  });
+
   /* mobile menu */
   var menuBtn = $(".menu-btn"), nav = $("#nav");
   if (menuBtn && nav) {
